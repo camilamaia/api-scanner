@@ -12,6 +12,11 @@ def mock_string_evaluate(mocker):
 
 
 @fixture
+def mock_get_all_vars(mocker):
+    return mocker.patch("scanapi.tree.endpoint_node.EndpointNode.get_all_vars")
+
+
+@fixture
 def spec_evaluator():
     parent = EndpointNode({"name": "bar", "requests": [{}]})
     endpoint = EndpointNode({"name": "foo", "requests": [{}]}, parent)
@@ -35,6 +40,17 @@ class TestGet:
         key = "name"
         value = spec_evaluator.get(key)
         assert value == "foo"
+
+    @mark.context("when key exists in endpoint node")
+    @mark.it("should search endpoint node")
+    @mark.it("should return the value in endpoint node")
+    def test_should_return_list(self, mock_get_all_vars, spec_evaluator):
+        key = "requests"
+        expected_value = "value"
+        mock_get_all_vars.side_effect = lambda: {key: expected_value}
+        value = spec_evaluator.get(key)
+        mock_get_all_vars.assert_called_once()
+        assert value == expected_value
 
 
 @mark.describe("spec evaluator")

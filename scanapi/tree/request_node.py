@@ -147,10 +147,11 @@ class RequestNode:
         extras = dict(self.endpoint.spec_vars)
         extras["response"] = response
 
-        self.endpoint.spec_vars.update(
+        self.endpoint.propagate_spec_vars(
             self.spec.get(VARS_KEY, {}), extras=extras,
         )
 
+        self.endpoint.spec_vars.update({"response": response})
         tests_results = self._run_tests()
         hide_sensitive_info(response)
 

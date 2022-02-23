@@ -18,8 +18,17 @@ class TestRun:
     def mock_time_sleep(self, mocker):
         return mocker.patch("scanapi.tree.request_node.time.sleep")
 
+    @fixture
+    def mock_propagate_spec_vars(self, mocker):
+        return mocker.patch(
+            "scanapi.tree.endpoint_node.EndpointNode.propagate_spec_vars"
+        )
+
     @mark.it("should call the request method")
-    def test_calls_request(self, mock_session, mock_time_sleep):
+    @mark.it("should update spec vars of endpoint node")
+    def test_calls_request(
+        self, mock_session, mock_time_sleep, mock_propagate_spec_vars
+    ):
         request = RequestNode(
             {"path": "http://foo.com", "name": "request_name"},
             endpoint=EndpointNode(
@@ -37,6 +46,10 @@ class TestRun:
             params=request.params,
             json=request.body,
             allow_redirects=False,
+        )
+
+        mock_propagate_spec_vars.assert_called_once_with(
+            {}, extras={"response": mock_session().request()}
         )
 
         assert result == {

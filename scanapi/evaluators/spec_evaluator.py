@@ -29,7 +29,6 @@ class SpecEvaluator:
         values = {
             key: evaluate(value, extras) for key, value in spec_vars.items()
         }
-        self.registry.update(extras)
         self.registry.update(values)
 
     def get(self, key, default=None):
@@ -45,8 +44,9 @@ class SpecEvaluator:
         if key in self:
             return self.registry[key]
 
-        if key in self.endpoint.parent.spec_vars:
-            return self.endpoint.parent.spec_vars[key]
+        all_vars = self.endpoint.get_all_vars()
+        if key in all_vars:
+            return all_vars[key]
 
         raise KeyError(key)
 
