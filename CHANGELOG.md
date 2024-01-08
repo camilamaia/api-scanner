@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - python -m scanapi command [#501](https://github.com/scanapi/scanapi/issues/501)
+- Upgrades pyyaml to v6.0.1 [#675](https://github.com/scanapi/scanapi/issues/675)
 
 ## [2.8.2] - 2023-03-06
 ### Fixed
