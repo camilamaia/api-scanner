@@ -2,8 +2,7 @@
 import datetime
 import pathlib
 import webbrowser
-
-from pkg_resources import get_distribution
+from importlib.metadata import version
 
 from scanapi.console import write_report_path
 from scanapi.session import session
@@ -70,5 +69,5 @@ class Reporter:
             "project_name": settings.get("project_name", ""),
             "results": results,
             "session": session,
-            "scanapi_version": get_distribution("scanapi").version,
+            "scanapi_version": version("scanapi"),
         }

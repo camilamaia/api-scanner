@@ -1,8 +1,8 @@
 import logging
+from importlib.metadata import version
 
 import click
 import yaml
-from pkg_resources import get_distribution
 from rich.logging import RichHandler
 
 from scanapi.exit_code import ExitCode
@@ -11,11 +11,9 @@ from scanapi.settings import settings
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
-dist = get_distribution("scanapi")
-
 
 @click.group()
-@click.version_option(version=dist.version)
+@click.version_option(version=version("scanapi"))
 def main():
     """Automated Testing and Documentation for your REST API."""
 

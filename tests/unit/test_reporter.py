@@ -68,14 +68,8 @@ class TestWrite:
         return mocker.patch("scanapi.reporter.webbrowser")
 
     @fixture
-    def mock_get_distribution(self, mocker):
-        class MockDistro:
-            @property
-            def version(self):
-                return "2.0.0"
-
-        mock_distr = mocker.patch("scanapi.reporter.get_distribution")
-        mock_distr.return_value = MockDistro()
+    def mock_version(self, mocker):
+        mocker.patch("scanapi.reporter.version", return_value="2.0.0")
 
     @fixture
     def context(self, mocked__session):
@@ -100,7 +94,7 @@ class TestWrite:
         mocked__render,
         mocked__open,
         mocked__session,
-        mock_get_distribution,
+        mock_version,
         context,
     ):
         mocked__render.return_value = "ScanAPI Report"
@@ -120,7 +114,7 @@ class TestWrite:
         mocked__render,
         mocked__open,
         mocked__session,
-        mock_get_distribution,
+        mock_version,
         context,
     ):
         mocked__render.return_value = "ScanAPI Report"
@@ -140,7 +134,7 @@ class TestWrite:
         mocked__render,
         mocked__open,
         mocked__session,
-        mock_get_distribution,
+        mock_version,
         context,
     ):
         mocked__render.return_value = "ScanAPI Report"
@@ -162,7 +156,7 @@ class TestWrite:
         mocked__render,
         mocked__open,
         mocked__session,
-        mock_get_distribution,
+        mock_version,
         context,
         mocked__webbrowser,
     ):
